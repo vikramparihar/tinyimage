@@ -1,0 +1,30 @@
+{
+  "name": "tinyimage",
+  "version": "1.0.0",
+  "description": "Nodejs tool for image compress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikramparihar/tinyimage.git"
+  },
+  "keywords": [
+    "tinyimage",
+    "image",
+    "compress",
+    "short",
+    "image"
+  ],
+  "author": "Vikram Parihar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vikramparihar/tinyimage/issues"
+  },
+  "homepage": "https://github.com/vikramparihar/tinyimage#readme",
+  "dependencies": {
+    "inquirer": "^9.0.2",
+    "sharp": "^0.30.7"
+  }
+}
