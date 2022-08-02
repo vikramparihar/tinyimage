@@ -15,6 +15,7 @@ readline.question(
   `** Please enter your image path or image folder path to compress **\n`,
   (name) => {
     readline.close();
+    console.log("\n");
     if (
       typeof name != "undefined" &&
       typeof name == "string" &&
@@ -30,6 +31,9 @@ readline.question(
   }
 );
 
+/** Gate function is responsible for check if path is a image file or image folder 
+Then take action accordingly 
+**/
 async function gate(imagePath = null) {
   let isFile = await _isFile(imagePath);
   let isDir = await _isDir(imagePath);
@@ -38,15 +42,18 @@ async function gate(imagePath = null) {
     await compress(imagePath);
     console.log("Completed");
   } else if (isDir) {
+    let dirPath = imagePath;
     let responseReadDir = fs.readdirSync(imagePath);
     if (responseReadDir.length) {
       for (const file of responseReadDir) {
-        let imagePath = path.resolve(file);
-        // console.log(imagePath);
-        if (await _isDir(imagePath)) continue;
-        // compress(imagePath);
+        let filePath = dirPath + "/" + file;
+        if (await _isDir(filePath)) continue; // Ignore if dir is nested directory
+        await compress(filePath);
+        // console.log(filePath);
       }
       console.log("Completed");
+    } else {
+      console.log("Sorry ! your inputed folder is empty");
     }
   } else {
     console.log(
@@ -87,7 +94,7 @@ async function compress(imagePath = null) {
 
 async function _isFile(imagePath = null) {
   try {
-    const stats = fs.statSync(imagePath);
+    let stats = fs.statSync(imagePath);
     return stats.isFile();
   } catch (err) {
     console.error(err);
@@ -97,7 +104,7 @@ async function _isFile(imagePath = null) {
 
 async function _isDir(imagePath = null) {
   try {
-    const stats = fs.statSync(imagePath);
+    let stats = fs.lstatSync(imagePath);
     return stats.isDirectory();
   } catch (err) {
     console.error(err);
